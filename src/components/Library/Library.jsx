@@ -1,7 +1,29 @@
 import React from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { deleteBook } from "../../store/actions/bookActions";
 
 const Library = () => {
-	const deleteBookHandler = () => {};
+	const dispatch = useDispatch();
+
+	const deleteBookHandler = (id) => {
+		dispatch(deleteBook({ id }));
+	};
+
+	const books = useSelector((state) => state.books.books);
+
+	const booksTable = books.map((book) => (
+		<tr>
+			<td>{book.title}</td>
+			<td>{book.author}</td>
+			<td>{book.rating}</td>
+			<td>
+				<button className="delete" onClick={() => deleteBookHandler(book.id)}>
+					{" "}
+					x{" "}
+				</button>
+			</td>
+		</tr>
+	));
 
 	return (
 		<div>
@@ -12,16 +34,9 @@ const Library = () => {
 					<th>Title</th>
 					<th>Author</th>
 					<th>Ration</th>
-					<th>=Actions</th>
+					<th>Actions</th>
 				</tr>
-				<tr>
-					<td> Book </td>
-					<td> Author of the book </td>
-					<td> Author of the 10 </td>
-					<td>
-						<button className="delete" onClick={deleteBookHandler}></button>
-					</td>
-				</tr>
+				{booksTable}
 			</table>
 		</div>
 	);

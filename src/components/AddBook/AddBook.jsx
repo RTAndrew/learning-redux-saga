@@ -1,12 +1,24 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { addBook } from "../../store/actions/bookActions";
 
 const AddBook = () => {
+	const dispatch = useDispatch();
+
 	const [title, setTitle] = useState("");
 	const [author, setAuthor] = useState("");
 	const [rating, setRating] = useState("5");
 
 	const AddBookHandler = (e) => {
 		e.preventDefault();
+		dispatch(
+			addBook({
+				id: Math.random(),
+				title,
+				author,
+				rating,
+			})
+		);
 	};
 
 	return (
@@ -25,7 +37,7 @@ const AddBook = () => {
 				<input
 					name="author"
 					value={author}
-					onChange={(e) => setTitle(e.target.value)}
+					onChange={(e) => setAuthor(e.target.value)}
 					type="text"
 				/>
 			</div>
@@ -34,7 +46,7 @@ const AddBook = () => {
 				<input
 					name="rating"
 					value={rating}
-					onChange={(e) => setTitle(e.target.value)}
+					onChange={(e) => setRating(e.target.value)}
 					type="number"
 					min="1"
 					max="0"
